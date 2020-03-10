@@ -1,0 +1,17 @@
+connection=wired
+dhcp=yes
+network_interface=eth0
+browser=firefox
+managed_bookmarks=https://www.sport.uni-bonn.de
+dpms_idle=30
+homepage_check=Startseite nicht gefunden - bitte den Admin kontaktieren
+homepage=https://www.sport.uni-bonn.de
+hostname=BOKIOSK
+allow_icmp_protocol=yes
+primary_keyboard_layout=de
+allow_popup_windows=yes
+freeze_idle=10
+shutdown_menu=reboot restart-session shutdown sleep
+whitelist=uni-bonn.de
+wake_on_lan=yes
+additional_components=uefi.zip
