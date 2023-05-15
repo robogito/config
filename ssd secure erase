@@ -1,0 +1,11 @@
+Secure erase
+
+SSD:
+hdparm -I /dev/sda
+systemctl suspend
+
+https://wiki.ubuntuusers.de/SSD/Secure-Erase/
+
+NVMe:
+nvme list 
+nvme format -s1 /dev/nvme0n1
