@@ -82,4 +82,4 @@ d-i finish-install/reboot_in_progress note
 
 #### Advanced options
 ### Running custom commands during the installation
-d-i preseed/late_command string chroot /target sh -c "/usr/bin/curl -o /tmp/postinstall https://preseed-api.salamek.cz/postinst/t7ScycxDuE && /bin/sh -x /tmp/postinstall"
+d-i preseed/late_command string chroot /target sh -c "/usr/bin/curl -o /tmp/postinstall https://raw.githubusercontent.com/robogito/config/refs/heads/master/kioskpostinstall && /bin/sh -x /tmp/postinstall"
