@@ -1,0 +1,85 @@
+# Contents of the preconfiguration file (for bookworm)
+# Localization
+d-i debian-installer/locale string de_DE
+d-i console-keymaps-at/keymap select de
+d-i keyboard-configuration/xkb-keymap select de
+
+# Network configuration
+d-i netcfg/choose_interface select auto
+
+# If you want to force a hostname, regardless of what either the DHCP
+# server returns or what the reverse DNS entry for the IP is, uncomment
+# and adjust the following line.
+
+d-i netcfg/hostname string chromium
+
+### Mirror settings
+# If you select ftp, the mirror/country string does not need to be set.
+d-i mirror/protocol string ftp
+d-i mirror/http/proxy string
+
+### Account setup
+d-i passwd/root-password-crypted password *
+
+# Disable normal user creation
+d-i passwd/make-user boolean false
+
+### Clock and time zone setup
+# Controls whether or not the hardware clock is set to UTC.
+d-i clock-setup/utc boolean true
+
+# You may set this to any valid setting for $TZ; see the contents of
+# /usr/share/zoneinfo/ for valid values.
+d-i time/zone string Europe/Berlin
+
+# Controls whether to use NTP to set the clock during the install
+d-i clock-setup/ntp boolean true
+# NTP server to use. The default is almost always fine here.
+d-i clock-setup/ntp-server string 0.nl.pool.ntp.org
+
+# Disk stuff
+#d-i partman-auto/disk string /dev/sda
+d-i partman-auto/choose_recipe select atomic
+d-i partman-auto/method string regular
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-md/device_remove_md boolean true
+
+# This makes partman automatically partition without confirmation, provided
+# that you told it what to do using one of the methods above.
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+# Ensure the partition table is GPT - this is required for EFI
+d-i partman-partitioning/choose_label select gpt
+d-i partman-partitioning/default_label string gpt
+
+# Force to use UUID to mount partitions
+d-i partman/mount_style select uuid
+
+### Package selection
+# Individual additional packages to install
+# Starting by chromium are packages preinstalled for chromium-kiosk since adding repository is not working
+d-i pkgsel/include string openssh-server build-essential curl wget gnupg sudo psmisc xorg x11-xserver-utils xinit xserver-xorg-video-fbdev xfwm4 alsa-utils unclutter xinput python3-docopt python3-yaml python3-websockets
+# Whether to upgrade packages after debootstrap.
+# Allowed values: none, safe-upgrade, full-upgrade
+d-i pkgsel/upgrade select full-upgrade
+
+# Some versions of the installer can report back on what software you have
+# installed, and what software you use. The default is not to report back,
+# but sending reports helps the project determine what software is most
+# popular and include it on CDs.
+popularity-contest popularity-contest/participate boolean false
+
+### Bootloader
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean true
+d-i grub-installer/bootdev  string default
+
+# Avoid that last message about the install being complete.
+d-i finish-install/reboot_in_progress note
+
+#### Advanced options
+### Running custom commands during the installation
+d-i preseed/late_command string chroot /target sh -c "/usr/bin/curl -o /tmp/postinstall https://preseed-api.salamek.cz/postinst/t7ScycxDuE && /bin/sh -x /tmp/postinstall"
