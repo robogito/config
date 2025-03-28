@@ -19,7 +19,7 @@ d-i mirror/protocol string ftp
 d-i mirror/http/proxy string
 
 ### Account setup
-d-i passwd/root-password-crypted password *
+d-i passwd/root-password-crypted password DE82EF9FC195702CC4FBF0F3A1EBA7BB89E158CF61AB8FD36DC2C80BE5ADE8135236AFA13945B6B8AEFE2429D68DD81C4A43727C4B228654FCA63F1CEF79C88E
 
 # Disable normal user creation
 d-i passwd/make-user boolean false
