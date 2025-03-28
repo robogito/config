@@ -14,7 +14,7 @@ d-i netcfg/choose_interface select auto
 d-i netcfg/hostname string uniosk
 
 ### Mirror settings
-d-i mirror/country string DEtttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+d-i mirror/country string DE
 d-i mirror/http/hostname string ftp.debian.org
 d-i mirror/http/directory string /debian/
 d-i mirror/http/proxy string
@@ -63,8 +63,6 @@ d-i partman/mount_style select uuid
 # Individual additional packages to install
 # Starting by chromium are packages preinstalled for chromium-kiosk since adding repository is not working
 d-i pkgsel/include string openssh-server build-essential curl wget gnupg sudo psmisc xorg x11-xserver-utils xinit xserver-xorg-video-fbdev xfwm4 alsa-utils unclutter xinput python3-docopt python3-yaml python3-websockets
-# Whether to upgrade packages after debootstrap.
-# Allowed values: none, safe-upgrade, full-upgrade
 d-i pkgsel/upgrade select full-upgrade
 
 # Some versions of the installer can report back on what software you have
