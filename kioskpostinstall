@@ -1,0 +1,37 @@
+#!/bin/sh
+set -e
+
+cat > /root/preseeder-firstboot.sh << EOF
+#!/bin/sh
+
+while ! curl --output /dev/null --head --silent --fail "https://www.test.de"; do
+    echo "Waiting for network..."
+    sleep 1
+done
+
+curl -s https://preseed-api.salamek.cz/plugin/download/preseeder_plugin_vnc.VncPlugin/t7ScycxDuE | sh
+curl -s https://preseed-api.salamek.cz/project-file/download/YPsYMxLQaf?install_short_uuid=t7ScycxDuE | sh
+systemctl disable preseeder-firstboot
+systemctl start reboot.target
+EOF
+
+chmod +x /root/preseeder-firstboot.sh
+
+cat > /etc/systemd/system/preseeder-firstboot.service << EOF
+[Unit]
+Description=Preseeder First boot
+Requires=network.target network-online.target
+After=getty.target network-online.target
+Conflicts=getty@tty1.service
+[Service]
+Type=simple
+Restart=no
+RemainAfterExit=no
+RestartSec=5s
+ExecStart=/bin/sh /root/preseeder-firstboot.sh
+StandardOutput=journal+console
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl enable preseeder-firstboot
