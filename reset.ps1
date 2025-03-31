@@ -9,10 +9,13 @@ if (Test-Path $UserProfile) {
     Remove-Item -Path $UserProfile -Recurse -Force
 }
 
+# Neues Profilverzeichnis erstellen
+New-Item -Path $UserProfile -ItemType Directory -Force
+
 # Neues Profil aus "studentclean" kopieren
 if (Test-Path $BackupProfile) {
     Write-Output "Kopiere neues Profil aus $BackupProfile"
-    Copy-Item -Path "$BackupProfile\*" -Destination $UserProfile -Recurse -Force
+    robocopy $BackupProfile $UserProfile /E /COPYALL /R:3 /W:5
     
     # Setzt die korrekten Berechtigungen für den Benutzer "student"
     $acl = Get-Acl $UserProfile
